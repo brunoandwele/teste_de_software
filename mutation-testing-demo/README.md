@@ -6,6 +6,8 @@ Um projeto educacional demonstrando testes de mutação em Python usando a ferra
 
 Este projeto foi desenvolvido para ensinar os conceitos de **testes de mutação** através de exemplos práticos. Os testes de mutação são uma técnica avançada que avalia a qualidade de uma suíte de testes introduzindo pequenas alterações (mutações) no código e verificando se os testes conseguem detectá-las.
 
+**Nota importante**: Esta versão contém intencionalmente uma suíte de testes com lacunas para fins educacionais, permitindo que mutantes sobrevivam e sejam analisados pelos estudantes.
+
 ## Estrutura do Projeto
 
 ```
@@ -13,9 +15,7 @@ mutation-testing-demo/
 ├── README.md
 ├── requirements.txt
 ├── setup.cfg
-├── .github/
-│   └── workflows/
-│       └── mutation-tests.yml
+├── .gitignore
 ├── calculator/
 │   ├── __init__.py
 │   └── operations.py
@@ -34,8 +34,8 @@ mutation-testing-demo/
 
 1. **Clone o repositório:**
    ```bash
-   git clone https://github.com/seu-usuario/mutation-testing-demo.git
-   cd mutation-testing-demo
+   git clone https://github.com/Rossi-Luciano/teste_de_software.git
+   cd teste_de_software/mutation-testing-demo
    ```
 
 2. **Crie um ambiente virtual (recomendado):**
@@ -64,144 +64,226 @@ Primeiro, verifique se todos os testes passam:
 python -m pytest tests/ -v
 ```
 
+**Saída esperada:**
+```
+========================================================================================== test session starts ===========================================================================================
+platform linux -- Python 3.12.3, pytest-8.3.5, pluggy-1.5.0
+rootdir: /workspaces/mutation-testing-demo
+configfile: setup.cfg
+plugins: cov-7.0.0
+collected 12 items
+
+tests/test_operations.py::TestCalculator::test_add PASSED                                  [  8%]
+tests/test_operations.py::TestCalculator::test_multiply PASSED                             [ 16%]
+tests/test_operations.py::TestCalculator::test_divide_zero PASSED                          [ 25%]
+tests/test_operations.py::TestCalculator::test_square_root_negative PASSED                 [ 33%]
+tests/test_operations.py::TestCalculator::test_factorial_negative PASSED                   [ 41%]
+tests/test_operations.py::TestCalculator::test_absolute_value_basic PASSED                 [ 50%]
+tests/test_operations.py::TestCalculator::test_max_of_two_equal PASSED                     [ 58%]
+tests/test_operations.py::TestCalculator::test_is_positive_true PASSED                     [ 66%]
+tests/test_operations.py::TestCalculator::test_calculate_percentage_basic PASSED           [ 75%]
+tests/test_operations.py::TestCalculator::test_grade_classification_a PASSED               [ 83%]
+tests/test_operations.py::TestCalculator::test_fibonacci_base_case PASSED                  [ 91%]
+tests/test_operations.py::TestCalculator::test_is_prime_true_case PASSED                   [100%]
+
+=========================================================================================== 12 passed in 0.04s ===========================================================================================
+```
+
 ### 2. Verificar Cobertura de Código
 
 ```bash
-python -m pytest --cov=calculator/ --cov-report=term-missing tests/
+python -m pytest --cov=calculator/ tests/
 ```
+
+**Saída esperada:**
+```
+============================================================================================= tests coverage =============================================================================================
+Name                       Stmts   Miss  Cover
+----------------------------------------------
+calculator/__init__.py         3      0   100%
+calculator/operations.py     101     53    48%
+----------------------------------------------
+TOTAL                        104     53    49%
+=========================================================================================== 12 passed in 0.11s ===========================================================================================
+```
+
+**Observação importante**: Apesar da cobertura de apenas 49%, todos os testes passam. Isso demonstra uma limitação da métrica de cobertura.
 
 ### 3. Executar Testes de Mutação
 
 ```bash
+# Remover cache anterior (se existir)
+rm -rf .mutmut-cache/
+
 # Executar mutmut
 mutmut run
-
-# Ver resultados
-mutmut results
-
-# Analisar mutantes específicos
-mutmut show 1
-mutmut show 2
 ```
 
-### 4. Interpretar Resultados
-
-Os resultados do mutmut incluem:
-
-- **Killed mutants**: Testes detectaram a mutação (bom!)
-- **Survived mutants**: Testes não detectaram a mutação (precisa melhorar)
-- **Timeout mutants**: Mutação causou execução muito lenta
-- **Incompetent mutants**: Mutação causou erro de sintaxe
-
-### 5. Calcular Taxa de Mutação
-
-```python
-killed = 30  # número de mutantes mortos
-total = 34   # número total de mutantes
-incompetent = 1  # número de mutantes incompetentes
-
-valid_mutants = total - incompetent
-mutation_score = (killed / valid_mutants) * 100
-print(f'Taxa de Mutação: {mutation_score:.1f}%')
+**Saída esperada:**
+```
+⠋ Generating mutants
+    done in 2ms
+⠇ Listing all tests 
+⠴ Running clean tests
+    done
+⠏ Running forced fail test
+    done
+Running mutation testing
+⠸ 123/123  🎉 80 🫥 43  ⏰ 0  🤔 0  🙁 0  🔇 0
+0.00 mutations/second
 ```
 
-**Meta recomendada:** Taxa de mutação > 80%
-
-## Funcionalidades da Calculadora
-
-A classe `Calculator` implementa operações básicas:
-
-- **Aritméticas**: soma, subtração, multiplicação, divisão, potenciação
-- **Matemáticas**: raiz quadrada, fatorial
-- **Utilitárias**: verificação de números pares
-
-Cada função inclui tratamento de casos especiais e validação de entrada.
-
-## Comandos Úteis
+### 4. Visualizar Resultados
 
 ```bash
-# Limpar cache do mutmut
-mutmut cache clear
+# Ver resumo dos resultados
+mutmut results
+```
 
-# Executar em arquivo específico
-mutmut run --paths-to-mutate calculator/operations.py
+**Saída esperada (parcial):**
+```
+    calculator.operations.xǁCalculatorǁsubtract__mutmut_1: no tests
+    calculator.operations.xǁCalculatorǁpower__mutmut_1: no tests
+    calculator.operations.xǁCalculatorǁis_even__mutmut_1: no tests
+    calculator.operations.xǁCalculatorǁis_even__mutmut_2: no tests
+    calculator.operations.xǁCalculatorǁis_even__mutmut_3: no tests
+    calculator.operations.xǁCalculatorǁis_even__mutmut_4: no tests
+    calculator.operations.xǁCalculatorǁmin_of_three__mutmut_1: no tests
+    calculator.operations.xǁCalculatorǁmin_of_three__mutmut_2: no tests
+    ...
+    calculator.operations.xǁCalculatorǁcount_digits__mutmut_15: no tests
+```
 
-# Aplicar mutante para teste manual
-mutmut apply 2
+### 5. Analisar Mutantes Específicos
+
+```bash
+# Analisar um mutante específico
+mutmut show "calculator.operations.xǁCalculatorǁsubtract__mutmut_1"
+```
+
+**Saída esperada:**
+```
+# calculator.operations.xǁCalculatorǁsubtract__mutmut_1: no tests
+--- calculator/operations.py
++++ calculator/operations.py
+@@ -1,3 +1,3 @@
+ def subtract(self, a: Number, b: Number) -> Number:
+         """Subtrai dois números."""
+-        return a - b
++        return a + b
+```
+
+### 6. Interpretar os Resultados
+
+**Símbolos dos Resultados:**
+- 🎉 **80 killed**: Testes detectaram essas mutações
+- 🫥 **43 survived**: Mutações não detectadas pelos testes
+- ⏰ **0 timeout**: Nenhuma mutação causou execução lenta
+- 🤔 **0 incompetent**: Nenhuma mutação causou erro de sintaxe
+
+**Taxa de Mutação Atual:**
+```
+Taxa = 80 killed / 123 total = 65%
+```
+
+## Análise dos Mutantes Sobreviventes
+
+### Funções Completamente Não Testadas
+- `subtract` (1 mutante)
+- `power` (1 mutante)
+- `is_even` (4 mutantes)
+- `min_of_three` (4 mutantes)
+- `compare_numbers` (5 mutantes)
+- `is_in_range` (2 mutantes)
+- `calculate_discount` (11 mutantes)
+- `count_digits` (15 mutantes)
+
+### Exemplo de Análise de Mutante
+
+Para o mutante `subtract__mutmut_1`:
+- **Tipo**: Operador aritmético (- → +)
+- **Status**: Sobreviveu (no tests)
+- **Motivo**: Função `subtract` não possui testes
+- **Solução**: Adicionar teste como `assert calc.subtract(5, 3) == 2`
+
+## Exercício Prático
+
+### Fase 1: Análise Inicial (Estado Atual)
+```
+Cobertura de Código: 49%
+Taxa de Mutação: 65%
+Mutantes Sobreviventes: 43
+```
+
+### Fase 2: Adicionar Testes
+Adicione testes para as funções não cobertas:
+
+```python
+def test_subtract(self):
+    assert self.calc.subtract(5, 3) == 2
+    assert self.calc.subtract(1, 1) == 0
+
+def test_is_even(self):
+    assert self.calc.is_even(2) is True
+    assert self.calc.is_even(3) is False
+```
+
+### Fase 3: Re-executar e Comparar
+```bash
+rm -rf .mutmut-cache/
+mutmut run
+```
+
+**Meta Final:**
+```
+Cobertura de Código: >90%
+Taxa de Mutação: >80%
+Mutantes Sobreviventes: <10
+```
+
+## Comandos de Depuração
+
+```bash
+# Ver diferenças após aplicar mutante
+mutmut apply "calculator.operations.xǁCalculatorǁsubtract__mutmut_1"
+git diff
 python -m pytest tests/ -v
 git checkout -- calculator/
 
-# Exportar relatório
-mutmut results > mutation_report.txt
+# Verificar sintaxe
+python -c "import calculator.operations"
+
+# Executar teste específico
+python -m pytest tests/test_operations.py::TestCalculator::test_add -v
 ```
 
-## Integração Contínua
+## Tipos de Mutações Encontradas
 
-O projeto inclui workflow do GitHub Actions (`.github/workflows/mutation-tests.yml`) que:
-
-- Executa testes unitários
-- Executa testes de mutação
-- Verifica se a taxa de mutação atende ao critério mínimo (80%)
-- Gera relatórios automáticos
-
-## Problemas Comuns
-
-### Execução Lenta
-```bash
-mutmut run --runner-timeout 30
-```
-
-### Muitos Mutantes Incompetentes
-```bash
-python -m py_compile calculator/operations.py
-```
-
-### Testes Falhando
-```bash
-python -m pytest tests/ --tb=short
-```
-
-## Exemplo de Análise
-
-### Antes da Melhoria
-```
-Killed mutants (25)
-survived mutants (8)
-timeout mutants (0)
-incompetent mutants (1)
-total mutants (34)
-
-Taxa de Mutação: 75.8%
-```
-
-### Após Melhorias nos Testes
-```
-Killed mutants (32)
-survived mutants (1)
-timeout mutants (0)
-incompetent mutants (1)
-total mutants (34)
-
-Taxa de Mutação: 97.0%
-```
-
-## Contribuindo
-
-1. Fork o projeto
-2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`)
-3. Commit suas mudanças (`git commit -am 'Adiciona nova feature'`)
-4. Push para a branch (`git push origin feature/nova-feature`)
-5. Abra um Pull Request
+- **Operadores aritméticos**: `+` ↔ `-`, `*` ↔ `/`
+- **Operadores relacionais**: `>` ↔ `>=`, `<` ↔ `<=`, `==` ↔ `!=`
+- **Operadores lógicos**: `and` ↔ `or`
+- **Valores literais**: `0` ↔ `1`, `2` ↔ `3`
+- **Condições de fronteira**: limites de loops e ranges
 
 ## Objetivos Educacionais
 
-Este projeto ensina:
+Este projeto demonstra:
 
-- Como implementar testes de mutação
-- Diferença entre cobertura de código e qualidade de testes
-- Identificação de lacunas em suítes de teste
-- Uso prático da ferramenta mutmut
-- Integração de testes de mutação em CI/CD
+1. **Limitações da cobertura de código**: 49% de cobertura mas testes passam
+2. **Valor dos testes de mutação**: Revelam lacunas reais (65% vs. 100%)
+3. **Análise sistemática**: Como identificar e corrigir lacunas específicas
+4. **Melhoria iterativa**: Processo de aumento da qualidade dos testes
+
+## Troubleshooting
+
+### Problema: Comando `mutmut show` falha
+**Solução**: Use o nome completo exato conforme mostrado em `mutmut results`
+
+### Problema: Cache antigo interferindo
+**Solução**: Execute `rm -rf .mutmut-cache/` antes de `mutmut run`
+
+### Problema: Testes falhando inesperadamente
+**Solução**: Verifique se não há mutante aplicado com `git status`
 
 ## Recursos Adicionais
 
@@ -211,15 +293,9 @@ Este projeto ensina:
 
 ## Licença
 
-Este projeto está licenciado sob a MIT License - veja o arquivo [LICENSE](LICENSE) para detalhes.
+Este projeto está licenciado sob a MIT License.
 
 ## Autor
 
 - **Prof. Luciano Rossi** - Centro Universitário FEI
 - Disciplina: Simulação e Teste de Software (CC8550)
-
-## Agradecimentos
-
-- Comunidade Python pelo ecossistema de ferramentas de teste
-- Desenvolvedores do mutmut pela excelente ferramenta
-- Estudantes da FEI pelo feedback e sugestões
