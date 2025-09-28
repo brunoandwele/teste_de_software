@@ -1,82 +1,70 @@
-"""Testes para as operações da calculadora."""
+"""Testes para as operações da calculadora - Versão estrategicamente enfraquecida."""
 
 import pytest
-import math
 from calculator import Calculator
 
 
 class TestCalculator:
     """Testes para a classe Calculator."""
-    
+
     def setup_method(self):
         """Configuração executada antes de cada teste."""
         self.calc = Calculator()
-    
+
     def test_add(self):
-        """Testa a operação de soma."""
+        """Testa a operação de soma - apenas um caso."""
         assert self.calc.add(2, 3) == 5
-        assert self.calc.add(-1, 1) == 0
-        assert self.calc.add(0, 0) == 0
-        assert self.calc.add(2.5, 1.5) == 4.0
-    
-    def test_subtract(self):
-        """Testa a operação de subtração."""
-        assert self.calc.subtract(5, 3) == 2
-        assert self.calc.subtract(1, 1) == 0
-        assert self.calc.subtract(-1, -1) == 0
-        assert self.calc.subtract(10, 15) == -5
-    
+
     def test_multiply(self):
-        """Testa a operação de multiplicação."""
+        """Testa a operação de multiplicação - apenas um caso."""
         assert self.calc.multiply(2, 3) == 6
-        assert self.calc.multiply(0, 5) == 0
-        assert self.calc.multiply(-2, 3) == -6
-        assert self.calc.multiply(2.5, 4) == 10.0
-    
-    def test_divide(self):
-        """Testa a operação de divisão."""
-        assert self.calc.divide(6, 2) == 3
-        assert self.calc.divide(7, 2) == 3.5
-        assert self.calc.divide(-6, 2) == -3
-        
-        # Teste de divisão por zero
-        with pytest.raises(ValueError, match="Divisão por zero não é permitida"):
+
+    def test_divide_zero(self):
+        """Testa apenas divisão por zero."""
+        with pytest.raises(ValueError):
             self.calc.divide(5, 0)
-    
-    def test_power(self):
-        """Testa a operação de potenciação."""
-        assert self.calc.power(2, 3) == 8
-        assert self.calc.power(5, 0) == 1
-        assert self.calc.power(2, -1) == 0.5
-        assert self.calc.power(9, 0.5) == 3.0
-    
-    def test_square_root(self):
-        """Testa a operação de raiz quadrada."""
-        assert self.calc.square_root(4) == 2.0
-        assert self.calc.square_root(9) == 3.0
-        assert self.calc.square_root(0) == 0.0
-        assert abs(self.calc.square_root(2) - 1.4142135623730951) < 1e-10
-        
-        # Teste de raiz de número negativo
-        with pytest.raises(ValueError, match="Raiz quadrada de número negativo não é real"):
+
+    def test_square_root_negative(self):
+        """Testa apenas raiz de número negativo."""
+        with pytest.raises(ValueError):
             self.calc.square_root(-1)
-    
-    def test_is_even(self):
-        """Testa a verificação de números pares."""
-        assert self.calc.is_even(2) is True
-        assert self.calc.is_even(3) is False
-        assert self.calc.is_even(0) is True
-        assert self.calc.is_even(-2) is True
-        assert self.calc.is_even(-3) is False
-    
-    def test_factorial(self):
-        """Testa o cálculo de fatorial."""
-        assert self.calc.factorial(0) == 1
-        assert self.calc.factorial(1) == 1
-        assert self.calc.factorial(3) == 6
-        assert self.calc.factorial(5) == 120
-        
-        # Teste de fatorial de número negativo
-        with pytest.raises(ValueError, match="Fatorial não definido para números negativos"):
+
+    def test_factorial_negative(self):
+        """Testa apenas fatorial de número negativo."""
+        with pytest.raises(ValueError):
             self.calc.factorial(-1)
-        
+
+    def test_absolute_value_basic(self):
+        """Testa valor absoluto apenas para números positivos."""
+        assert self.calc.absolute_value(5) == 5
+        # Não testa números negativos - mutante pode sobreviver
+
+    def test_max_of_two_equal(self):
+        """Testa max apenas quando números são iguais."""
+        assert self.calc.max_of_two(5, 5) == 5
+        # Não testa a > b ou a < b - mutantes sobreviverão
+
+    def test_is_positive_true(self):
+        """Testa is_positive apenas para números positivos."""
+        assert self.calc.is_positive(10) is True
+        # Não testa números negativos ou zero - mutantes sobreviverão
+
+    def test_calculate_percentage_basic(self):
+        """Testa porcentagem apenas para um caso simples."""
+        assert self.calc.calculate_percentage(100, 10) == 10.0
+        # Não testa casos extremos - mutantes podem sobreviver
+
+    def test_grade_classification_a(self):
+        """Testa classificação apenas para nota A."""
+        assert self.calc.grade_classification(95) == "A"
+        # Não testa outras faixas - mutantes em outras condições sobreviverão
+
+    def test_fibonacci_base_case(self):
+        """Testa Fibonacci apenas para caso base."""
+        assert self.calc.fibonacci(1) == 1
+        # Não testa n=0, n=2, n>2 - muitos mutantes sobreviverão
+
+    def test_is_prime_true_case(self):
+        """Testa is_prime apenas para um número primo."""
+        assert self.calc.is_prime(7) is True
+        # Não testa números compostos, casos especiais - mutantes sobreviverão
