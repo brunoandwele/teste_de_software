@@ -36,6 +36,9 @@ https://practicetestautomation.com/practice-test-login/
         
         # Verificar sucesso
         assert "Logged In Successfully" in driver.page_source
+        
+### Resultados:
+![EX1](exercicios/exercicio01/PrintTeste.png)
 
 ## Exercício 2: API de Produtos (REST)
 
@@ -65,6 +68,11 @@ Usando a API https://fakestoreapi.com/, crie testes para as seguintes operaçõe
 - Status codes corretos
 - Schema dos produtos
 - Categorias disponíveis: electronics, jewelery, men's clothing, women's clothing
+
+### Resultados:
+![EX2](exercicios/exercicio02/PrintTeste.png)
+
+
 
 ## Exercício 3: Teste CRUD Completo (REST)
 
@@ -107,6 +115,9 @@ Usando JSONPlaceholder (https://jsonplaceholder.typicode.com/), implemente teste
 - Implemente teardown para limpar dados
 - Teste casos de erro (ex: criar todo sem título)
 
+### Resultados:
+![EX3](exercicios/exercicio03/PrintTeste.png)
+
 ## Exercício 4: Page Object Model (Web)
 
 Refatore os testes do Exercício 1 usando Page Object Model.
@@ -140,6 +151,9 @@ Refatore os testes do Exercício 1 usando Page Object Model.
             self.digitar(self.EMAIL_INPUT, username)
             self.digitar(self.PASSWORD_INPUT, password)
             self.clicar(self.LOGIN_BUTTON)
+
+### Resultados:
+![EX4](exercicios/exercicio04/PrintTeste.png)
 
 ## Exercício 5: Testes Parametrizados (REST + Web)
 
@@ -215,6 +229,9 @@ Testar busca com múltiplos termos:
         time.sleep(2)
         
         assert termo_busca.lower() in driver.page_source.lower()
+
+### Resultados:
+![EX5](exercicios/exercicio05/PrintTeste.png)
 
 ### Estrutura esperada:
 
