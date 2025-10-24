@@ -38,7 +38,8 @@ https://practicetestautomation.com/practice-test-login/
         assert "Logged In Successfully" in driver.page_source
         
 ### Resultados:
-![EX1](exercicios/exercicio01/PrintTeste.png)
+<img width="1459" height="647" alt="PrintTeste (3)" src="https://github.com/user-attachments/assets/3ba7f72b-4819-4da8-b790-dfab286b50d6" />
+
 
 ## Exercício 2: API de Produtos (REST)
 
@@ -70,8 +71,7 @@ Usando a API https://fakestoreapi.com/, crie testes para as seguintes operaçõe
 - Categorias disponíveis: electronics, jewelery, men's clothing, women's clothing
 
 ### Resultados:
-![EX2](exercicios/exercicio02/PrintTeste.png)
-
+<img width="1459" height="647" alt="PrintTeste (4)" src="https://github.com/user-attachments/assets/d854eef7-e4d1-4bdc-be04-2c1699d8f523" />
 
 
 ## Exercício 3: Teste CRUD Completo (REST)
@@ -116,7 +116,7 @@ Usando JSONPlaceholder (https://jsonplaceholder.typicode.com/), implemente teste
 - Teste casos de erro (ex: criar todo sem título)
 
 ### Resultados:
-![EX3](exercicios/exercicio03/PrintTeste.png)
+<img width="1459" height="860" alt="PrintTest" src="https://github.com/user-attachments/assets/1543f8c6-e6e3-438d-85df-61d44a8fedb0" />
 
 ## Exercício 4: Page Object Model (Web)
 
@@ -153,7 +153,7 @@ Refatore os testes do Exercício 1 usando Page Object Model.
             self.clicar(self.LOGIN_BUTTON)
 
 ### Resultados:
-![EX4](exercicios/exercicio04/PrintTeste.png)
+<img width="1459" height="643" alt="PrintTest (1)" src="https://github.com/user-attachments/assets/d6a6e4f1-018c-4100-9078-84ffefcae872" />
 
 ## Exercício 5: Testes Parametrizados (REST + Web)
 
@@ -231,7 +231,8 @@ Testar busca com múltiplos termos:
         assert termo_busca.lower() in driver.page_source.lower()
 
 ### Resultados:
-![EX5](exercicios/exercicio05/PrintTeste.png)
+<img width="1459" height="874" alt="PrintTest (2)" src="https://github.com/user-attachments/assets/e51bdfc1-4ed4-4abe-a16e-c8c2808cada6" />
+
 
 ### Estrutura esperada:
 
